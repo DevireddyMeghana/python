@@ -11,3 +11,14 @@ def login(func):
 def securefile():
     return "Secret File"
 print(securefile())
+
+def my_decorator(func):
+    def wrapper():
+        print("Function is starting")
+        func()
+        print("Function is done")
+    return wrapper
+@my_decorator
+def greet():
+    print("Hello!")
+greet()
