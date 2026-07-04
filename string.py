@@ -14,4 +14,3 @@ print(l[::-1])
 s="Hello GoodMorning"
 print(s[::2])
 print(s[::-1])
-
