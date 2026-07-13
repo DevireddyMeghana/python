@@ -1,3 +1,6 @@
+from plotly.figure_factory.utils import validate_positive_scalars
+
+
 def login(func):
     def inner():
         un=input("Enter the Username:")
@@ -88,3 +91,76 @@ print(fun(10,24))
 print(fun.__name__)
 print(fun.__annotations__)
 print(fun.__doc__)
+
+import time
+# Timing decorator
+def timer2(delay):
+    def timer(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            # start = time.asctime()
+            start = time.time()
+            print("Started: ", start)
+            time.sleep(delay)
+            print(f"Sum : {func(*args, **kwargs)}")
+            # end = time.asctime().split()
+            end = time.time()
+            print(f"End : {end}")
+            print("Time taken: ",end-start)
+        return wrapper
+    return timer
+
+@timer2(5)
+def add(x,y):
+    """ This is a Doc String"""
+    su = 0
+    for i in range(1, x + y + 1):
+        su += i
+    return su
+
+add(100000,200000)
+print(add.__doc__)
+print(time.asctime())
+print(list(time.asctime().split()))
+
+
+def tim(delay=3):
+    def dec(fn):
+        @functools.wraps(fn)
+        def indec(*args, **kwargs):
+            print(f"Just adding {delay}sec Delay to start the function")
+            print(f"Address inside Decorator : {fn}")
+            time.sleep(delay)
+            result = fn(*args,**kwargs)
+            print("Execution Completed")
+            return result
+        print(f"Address fn: {fn}")
+        print(f"Address indec : {indec}")
+        return indec
+    return dec
+
+k = int(input("Enter Delay : "))
+@tim(k)
+def add(a,b,c):
+    """ Just adding A DOC"""
+    return a+b+c
+print(f"Address add : {add}")
+print(add(10,15,25))
+print(add.__doc__)
+del k
+
+def validate_positive(func):
+    @functools.wraps(func)
+    def inner(*args):
+        for i in args:
+            if i < 0:
+                print("Error Message")
+                return None
+        return func(*args)
+    return inner
+
+@validate_positive
+def mul(a,b):
+    return a*b
+mul(10,20)
+print(mul)
