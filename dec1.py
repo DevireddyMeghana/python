@@ -1,6 +1,3 @@
-from plotly.figure_factory.utils import validate_positive_scalars
-
-
 def login(func):
     def inner():
         un=input("Enter the Username:")
